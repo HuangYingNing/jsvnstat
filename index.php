@@ -185,10 +185,14 @@
 	}
 
 	function getAvailableInterfaces() {
+		if ($enabled_dropdowns['interface']) {
 		$interfaces = explode(": ", getCmdOutput("vnstat --iflist"));
 		$interfaces = explode(" ", trim(str_replace('lo', '', $interfaces[1])));
 		natsort($interfaces);
 		return $interfaces;
+		}
+		else
+			return $interfaces;
 	}
 
 	function getFromArgOrCookie($name, $current_value, $acceptable_values) {
