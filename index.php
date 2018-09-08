@@ -25,7 +25,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>jsvnstat - interactive network traffic analysis</title>
-		<link href="css/<?=$theme?>.css" rel="stylesheet" type="text/css" />
+		<link href="css/<?php echo $theme?>.css" rel="stylesheet" type="text/css" />
 		<!--[if IE]><script language="javascript" type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
 		<script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
 		<script language="javascript" type="text/javascript" src="js/jquery.flot.min.js"></script>
@@ -33,17 +33,17 @@
 		<script language="javascript" type="text/javascript" src="js/main.js"></script>
 		<script language="javascript" type="text/javascript">
 			datasets = {
-				"hourstx": {label: "KB TX", color: "<?=$tx_color?>", shadowSize: 5,	data: <?=getFlotArray($hour, 4);?>},
-				"hoursrx": {label: "KB RX", color: "<?=$rx_color?>", shadowSize: 5, data: <?=getFlotArray($hour, 3);?>},
-				"daystx": {label: "MB TX", color: "<?=$tx_color?>", shadowSize: 5, data: <?=getFlotArray($day, 4);?>},
-				"daysrx": {label: "MB RX", color: "<?=$rx_color?>", shadowSize: 5, data: <?=getFlotArray($day, 3);?>},
-				"monthstx": {label: "MB TX", color: "<?=$tx_color?>", shadowSize: 5, data: <?=getFlotArray($month, 4);?>},
-				"monthsrx": {label: "MB RX", color: "<?=$rx_color?>", shadowSize: 5, data: <?=getFlotArray($month, 3);?>},
-				"top10tx": {label: "MB TX", color: "<?=$tx_color?>", shadowSize: 5, data: <?=getFlotArray($top10, 4, 1);?>},
-				"top10rx": {label: "MB RX", color: "<?=$rx_color?>", shadowSize: 5, data: <?=getFlotArray($top10, 3, 1);?>}
+				"hourstx": {label: "KB TX", color: "<?php echo $tx_color?>", shadowSize: 5,	data: <?php echo getFlotArray($hour, 4);?>},
+				"hoursrx": {label: "KB RX", color: "<?php echo $rx_color?>", shadowSize: 5, data: <?php echo getFlotArray($hour, 3);?>},
+				"daystx": {label: "MB TX", color: "<?php echo $tx_color?>", shadowSize: 5, data: <?php echo getFlotArray($day, 4);?>},
+				"daysrx": {label: "MB RX", color: "<?php echo $rx_color?>", shadowSize: 5, data: <?php echo getFlotArray($day, 3);?>},
+				"monthstx": {label: "MB TX", color: "<?php echo $tx_color?>", shadowSize: 5, data: <?php echo getFlotArray($month, 4);?>},
+				"monthsrx": {label: "MB RX", color: "<?php echo $rx_color?>", shadowSize: 5, data: <?php echo getFlotArray($month, 3);?>},
+				"top10tx": {label: "MB TX", color: "<?php echo $tx_color?>", shadowSize: 5, data: <?php echo getFlotArray($top10, 4, 1);?>},
+				"top10rx": {label: "MB RX", color: "<?php echo $rx_color?>", shadowSize: 5, data: <?php echo getFlotArray($top10, 3, 1);?>}
 			};
-			graph_type = "<?=$graph_type?>";
-			key = "<?=$time_type?>";
+			graph_type = "<?php echo $graph_type?>";
+			key = "<?php echo $time_type?>";
 		</script>
 	</head>
 	<body>
@@ -86,16 +86,16 @@
 			<?php } else {echo $interface;} ?>
 			<br /><br />
 			<h3>Total</h3>
-			<attr title="<?=round($info['totaltx'], 0);?> MB">TX: <?=round($info['totaltx']/1024, 0);?> GB</attr><br />
-			<attr title="<?=round($info['totalrx'], 0);?> MB">RX: <?=round($info['totalrx']/1024, 0);?> GB</attr><br />
+			<attr title="<?php echo round($info['totaltx'], 0);?> MB">TX: <?php echo round($info['totaltx']/1024, 0);?> GB</attr><br />
+			<attr title="<?php echo round($info['totalrx'], 0);?> MB">RX: <?php echo round($info['totalrx']/1024, 0);?> GB</attr><br />
 			<br />
 			<h3>Uptime</h3>
-			<attr title="since <?=date($date_format['uptime'], $info['btime'])?>">
-				<?=floor((time() - $info['btime']) / 3600);?>h <?=floor(((time() - $info['btime']) / 60) % 60);?>min</attr><br />
+			<attr title="since <?php echo date($date_format['uptime'], $info['btime'])?>">
+				<?php echo floor((time() - $info['btime']) / 3600);?>h <?php echo floor(((time() - $info['btime']) / 60) % 60);?>min</attr><br />
 			<br />
 			<h3>Database</h3>
-			Created:<br /><?=date("d.m.Y H:i:s", $info['created']);?><br />
-			Last update:<br /><?=date("d.m.Y H:i:s", $info['updated']);?><br />
+			Created:<br /><?php echo date("d.m.Y H:i:s", $info['created']);?><br />
+			Last update:<br /><?php echo date("d.m.Y H:i:s", $info['updated']);?><br />
 			<br />
 			<?php if ($enabled_dropdowns['theme']) { ?>
 			<h3>Theme</h3>
@@ -119,16 +119,16 @@
 					<ul style="margin-left: 30px;">
 						<li>vnstat is installed</li>
 						<li>vnstat is executable (check php security settings)</li>
-						<li>vnstat has a database (if not: vnstat -u -i <?=$interface?>)</li>
+						<li>vnstat has a database (if not: vnstat -u -i <?php echo $interface?>)</li>
 					</ul></small>
 		<?php } ?>
 			<div id="placeholder"></div>
 			<br />
 			<div id="tables">
-			<?=getGraphTable($hour, 'hours', $date_format['hours'], "MB",$precision);?>
-			<?=getGraphTable($day, 'days', $date_format['days'], "GB", $precision);?>
-			<?=getGraphTable($month, 'months', $date_format['months'], "GB", $precision);?>
-			<?=getGraphTable($top10, 'top10', $date_format['top10'], "GB", $precision, 1);?>
+			<?php echo getGraphTable($hour, 'hours', $date_format['hours'], "MB",$precision);?>
+			<?php echo getGraphTable($day, 'days', $date_format['days'], "GB", $precision);?>
+			<?php echo getGraphTable($month, 'months', $date_format['months'], "GB", $precision);?>
+			<?php echo getGraphTable($top10, 'top10', $date_format['top10'], "GB", $precision, 1);?>
 			</div>
 		</div>
 		<div id="footer">
